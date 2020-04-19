@@ -21,9 +21,10 @@ public class SimpleSourceBean {
         this.source = source;
     }
 
-    public void publishUserProfileChange(String action,Long id){
-       logger.info("Sending Kafka message with action {} for id {}", action, id);
-        UserProfileChangeModel change =  new UserProfileChangeModel(id,action);
+    public void publishUserProfileChange(String action,Long id,String address,String phoneNumber){
+       logger.info("Sending Kafka message with action {},address{},phonenumber{} for id {}", action,address,phoneNumber,id);
+        UserProfileChangeModel change =  new UserProfileChangeModel(id,action,address,phoneNumber);
         source.output().send(MessageBuilder.withPayload(change).build());
     }
-}
+    
+ }

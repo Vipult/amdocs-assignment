@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.amdocs.authorization.events.source.SimpleSourceBean;
 import com.amdocs.authorization.model.UserProfile;
+import com.amdocs.authorization.repository.AuthorizationRestConnector;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +19,34 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 	
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationServiceImpl.class);
 	
-	//@Autowired
-	// private RestProxyConnector restProxyConnector;
+	@Autowired
+	private AuthorizationRestConnector authorizationRestConnector;
 	
 	@Autowired
     SimpleSourceBean simpleSourceBean;
 	
+     @Override
+	 public void saveUserProfile(UserProfile userProfile){
+		 logger.info("Saving new User Profile in service");
+		 authorizationRestConnector.saveUserProfile(userProfile);
+ 
+}
+	
 	 @Override 
 	  public void updateUserProfile(UserProfile userProfile) {
 		 logger.info("Sending an UPDATE event");
-		 simpleSourceBean.publishUserProfileChange("UPDATE",userProfile.getId());
+		 simpleSourceBean.publishUserProfileChange("UPDATE",userProfile.getId(),userProfile.getAddress(),userProfile.getPhoneNumber());
 
 	 }
 
 	 
 	 @Override	  
-	 public void deleteUserProfile(UserProfile userProfile){
+	 public void deleteUserProfile(Long id){
 		logger.info("Sending a DELETE event");
- simpleSourceBean.publishUserProfileChange("DELETE",userProfile.getId());
+ simpleSourceBean.publishUserProfileChange("DELETE",id,"","");
 	 }
 	 
-	/* @Override
-	 public void saveStatistic(Statistic statistic){
-		 logger.info("Saving new Statistic in service");
-		 restProxyConnector.saveStatistic(statistic);
-  simpleSourceBean.publishStatsChange(statistic.getName(), statistic.getCount());
- }*/
+	
 	 
 	 
 

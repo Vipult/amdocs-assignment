@@ -39,25 +39,25 @@ public class AuthorizationRestController {
 	@Autowired
 	 private AuthorizationService authorizationService;
 	
-	/*@PostMapping("/statistics")
-	 public void saveStatistic(@Valid @RequestBody Statistic statistic,BindingResult bindingResult){	
+	@PostMapping("/userprofiles")
+	 public void saveUserProfile(@RequestBody UserProfile userProfile){	
 		
-		logger.info("Saving new statistic in controller");
-	  restProxyService.saveStatistic(statistic);  
-	 }*/
+		logger.info("Saving new User Profile in controller");
+		authorizationService.saveUserProfile(userProfile);  
+	 }
 		
 	@PutMapping("/userprofiles/{id}")
 	 public void updateStatistic(@RequestBody UserProfile newProfile,@PathVariable(name="id")Long id){
-		logger.info("Updating User in Authorization Controller");
+		logger.info("Updating User Profile in Authorization Controller");
 		authorizationService.updateUserProfile(newProfile);
 	  }
 	
 	
 	@DeleteMapping("/userprofiles/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-	 public void deleteUserProfile(@RequestBody UserProfile newProfile){
+	 public void deleteUserProfile(@PathVariable(name="id")Long id){
 		logger.info("Deleting User in Authorization Controller");
-		authorizationService.deleteUserProfile(newProfile);
+		authorizationService.deleteUserProfile(id);
 	}
 			 
 

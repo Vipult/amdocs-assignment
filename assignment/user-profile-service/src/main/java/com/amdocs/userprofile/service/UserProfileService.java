@@ -1,6 +1,7 @@
 package com.amdocs.userprofile.service;
 
 import java.util.Optional;
+import java.util.List;
 
 import com.amdocs.userprofile.exception.ResourceNotFoundException;
 import com.amdocs.userprofile.model.UserProfile;
@@ -16,4 +17,6 @@ public interface UserProfileService {
 	 //public void updateUserProfile(UserProfile userProfile);
 
 	 public UserProfile updateUserProfile(UserProfile userProfile);
+	 
+	 public List<UserProfile> findAllUserProfiles();
 }

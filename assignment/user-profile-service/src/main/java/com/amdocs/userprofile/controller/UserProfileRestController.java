@@ -44,6 +44,11 @@ public class UserProfileRestController {
 	
 	@Autowired
 	 private UserProfileService userProfileService;
+	
+	@GetMapping("/userprofiles")
+    public List < UserProfile > getAllUserProfiles() {
+        return userProfileService.findAllUserProfiles();
+    }
 	  
 	@ResponseStatus(HttpStatus.OK)
 	 @PostMapping("/userprofiles")

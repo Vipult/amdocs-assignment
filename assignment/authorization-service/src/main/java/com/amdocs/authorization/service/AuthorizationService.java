@@ -6,9 +6,9 @@ import java.util.List;
 public interface AuthorizationService {
 	
 	//public List<Statistic> retrieveStatistics();	
-	public void deleteUserProfile(UserProfile userprofile);
+	public void deleteUserProfile(Long id);
 	//public Statistic getStatistic(String name);
-	//public void saveStatistic(Statistic statistic);
+	public void saveUserProfile(UserProfile userProfile);
 	public void updateUserProfile(UserProfile userprofile);
 	 
 	 
