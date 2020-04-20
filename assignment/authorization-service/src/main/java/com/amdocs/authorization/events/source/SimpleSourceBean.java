@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.amdocs.authorization.events.models.UserProfileChangeModel;
 
 
+
 @Component
 public class SimpleSourceBean {
     private Source source;
@@ -21,7 +22,7 @@ public class SimpleSourceBean {
         this.source = source;
     }
 
-    public void publishUserProfileChange(String action,Long id,String address,String phoneNumber){
+    public void publishUserProfileChange (String action,Long id,String address,String phoneNumber) {
        logger.info("Sending Kafka message with action {},address{},phonenumber{} for id {}", action,address,phoneNumber,id);
         UserProfileChangeModel change =  new UserProfileChangeModel(id,action,address,phoneNumber);
         source.output().send(MessageBuilder.withPayload(change).build());

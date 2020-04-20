@@ -48,42 +48,6 @@ public class UserProfileServiceTest {
 		
 	}
 	
-	@Test
-	public void verifyUpdateUserForCorrectID(){
-		
-		UserProfile userProfile= new UserProfile();
-    	userProfile.setAddress("Viman Nagar,Pune");
-    	userProfile.setPhoneNumber("9080796050");
-    	
-    	Optional<UserProfile> uf = Optional.of(userProfile);
-    	
-    	
-    	when(userProfileRepository.save(userProfile)).thenReturn(userProfile);
-    	
-    	
-    	UserProfile newUserProfile= userProfileServiceImpl.updateUserProfile(userProfile);
-    	assertEquals(userProfile.getAddress(), newUserProfile.getAddress());
-		assertEquals(userProfile.getPhoneNumber(),newUserProfile.getPhoneNumber());
-		
-		
-	}
 	
-	
-	
-	@Test
-	public void verifyDeleteUserForCorrectID(){
-		
-		
-    	Mockito.doNothing().when(userProfileRepository).deleteById(1L);
-    	//Mockito.doNothing().when(userProfileRepository).findById(1L);
-    	
-    	
-    	userProfileServiceImpl.deleteUserProfile(1L);
-    	//verify(userProfileRepository, times(1)).findById(1L);
-    	verify(userProfileRepository, times(1)).deleteById(1L);
-		
-		
-	}
-
 
 }

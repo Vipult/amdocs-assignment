@@ -53,55 +53,11 @@ public class UserProfileRestController {
 	@ResponseStatus(HttpStatus.OK)
 	 @PostMapping("/userprofiles")
 	 public UserProfile  CreateUserProfile(@RequestBody UserProfile newProfile){		
-		 logger.info("Saving New User ");
+		 
 		 logger.info("New User saved successfully");
 		 return userProfileService.saveUserProfile(newProfile);
 		 
-			 }
-	
-	/* @PutMapping("/userprofiles/{id}")
-	 public void updateUserProfile(@RequestBody UserProfile newProfile,@PathVariable(name="id")Long id){
-		 UserProfile userProfile=userProfileService.getUserProfile(id);
-		 if(userProfile!=null){
-	  logger.info("updating User ");	
-	  userProfileService.updateUserProfile(newProfile);
-	  logger.info("User Updated Successfully ");
-		 }
-	 }
-	*/
-	 @PutMapping("/userprofiles/{id}")
-	    public ResponseEntity < UserProfile > updateUserProfile(@RequestBody UserProfile newProfile,@PathVariable(name="id")Long id) throws ResourceNotFoundException {
-		 UserProfile profile = userProfileService.getUserProfile(id);
-		 logger.info("updating User ");
-		 profile.setAddress(newProfile.getAddress());
-		 profile.setPhoneNumber(newProfile.getPhoneNumber());		 
-	        final UserProfile updatedUserProfile = userProfileService.updateUserProfile(profile);
-	        logger.info("New User saved successfully");
-	        return ResponseEntity.ok(updatedUserProfile);
-	    }
-	 
-	 /*@DeleteMapping("/userprofiles/{id}")
-	    @ResponseStatus(HttpStatus.NO_CONTENT)
-		 public void deleteUserProfile(@PathVariable(name="id")Long id){
-			logger.info("Deleting The User ");
-			userProfileService.deleteUserProfile(id);
-			logger.info("User deleted successfully");
-		}*/
-		
-	 @DeleteMapping("/userprofiles/{id}")
-	 @ResponseStatus(HttpStatus.NO_CONTENT)
-	    public Map < String, Boolean > deleteUserProfile(@PathVariable(name="id")Long id)
-	    throws ResourceNotFoundException {
-		 UserProfile profile = userProfileService.getUserProfile(id);
-		 logger.info("Deleting The User ");
-		 userProfileService.deleteUserProfile(id);
-	        Map < String, Boolean > response = new HashMap < > ();
-	        response.put("deleted", Boolean.TRUE);
-	        logger.info("User deleted successfully");
-	        return response;
-	    }
-	 
-	  
+			 }  
 	 
 
 }

@@ -38,7 +38,7 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 
 	 
 	 @Override	  
-	 public void deleteUserProfile(Long id){
+	 public void deleteUserProfile(Long id) {
 		logger.info("Sending a DELETE event");
  simpleSourceBean.publishUserProfileChange("DELETE",id,"","");
 	 }

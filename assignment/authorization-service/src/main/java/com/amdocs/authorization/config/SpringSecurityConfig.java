@@ -38,23 +38,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-       http.httpBasic()
+        http.httpBasic()
             .and()
             .authorizeRequests()
             .anyRequest().authenticated().and()
             .csrf().disable();
-    	
-    
-       
-    	
     }
     
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
     {
         auth.jdbcAuthentication().dataSource(dataSource)
-            .authoritiesByUsernameQuery("select USERNAME, ROLE from EMPLOYEE where USERNAME=?")
-            .usersByUsernameQuery("select USERNAME, PASSWORD, 1 as enabled  from EMPLOYEE where USERNAME=?");
+            .authoritiesByUsernameQuery("select USERNAME, ROLE from USER where USERNAME=?")
+            .usersByUsernameQuery("select USERNAME, PASSWORD, 1 as enabled  from USER where USERNAME=?");
     }
     
     @Bean

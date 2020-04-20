@@ -1,6 +1,9 @@
 package com.amdocs.authorization.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +29,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 
+
 import com.amdocs.authorization.service.AuthorizationService;
 import com.amdocs.authorization.model.UserProfile;;
 
@@ -38,22 +42,16 @@ public class AuthorizationRestController {
 	@Autowired
 	 private AuthorizationService authorizationService;
 	
-	/*@GetMapping("/userprofiles")
-	 public String getUserProfile(){	
-		
-		logger.info("Saving new User Profile in controller");
-		 return "Authentication successful!!!";
-		//authorizationService.saveUserProfile(userProfile);  
-	 }*/
+	
 	
 	@PostMapping("/userprofiles")
 	 public void saveUserProfile(@RequestBody UserProfile userProfile){	
 		
 		logger.info("Saving new User Profile in controller");
-		//return "Authentication POST Request successful!!!";
+		
 		authorizationService.saveUserProfile(userProfile);  
 	 }
-		
+	
 	@PutMapping("/userprofiles/{id}")
 	 public void updateStatistic(@RequestBody UserProfile newProfile,@PathVariable(name="id")Long id){
 		logger.info("Updating User Profile in Authorization Controller");
@@ -62,11 +60,14 @@ public class AuthorizationRestController {
 	
 	
 	@DeleteMapping("/userprofiles/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-	 public void deleteUserProfile(@PathVariable(name="id")Long id){
+   @ResponseStatus(HttpStatus.NO_CONTENT)
+	 public void deleteUserProfile (@PathVariable(name="id")Long id) {
 		logger.info("Deleting User in Authorization Controller");
 		authorizationService.deleteUserProfile(id);
+		
 	}
+		
+	
 			 
 
 }

@@ -36,26 +36,20 @@ public class UserProfileServiceImpl implements UserProfileService {
        return userProfileRepository.save(profile);
     }
 
-    public UserProfile updateUserProfile(UserProfile newProfile){
-    	return userProfileRepository.save(newProfile);
-    }
-
-    public void deleteUserProfile(Long id){
-    	userProfileRepository.deleteById(id);
-    }
-    
+       
     @StreamListener(Sink.INPUT)
-	  public void loggerSink(UserProfileChangeModel userProfileChange) {
+	  public void loggerSink(UserProfileChangeModel userProfileChange)  {
         logger.info("Received an event for User Profile Change id {} and action {} and address {} and phonenumber {}", userProfileChange.getId(),userProfileChange.getAction(),userProfileChange.getAddress(),userProfileChange.getPhoneNumber());    	
     	UserProfile userProfile = new UserProfile();
     	userProfile.setId(userProfileChange.getId());
     	userProfile.setAddress(userProfileChange.getAddress());
     	userProfile.setPhoneNumber(userProfileChange.getPhoneNumber());
-        logger.info("Created a UserProfile Object with id "+userProfile.getId()+" with address "+userProfile.getAddress()+" with Phonenumber "+userProfile.getPhoneNumber());        
         if(userProfileChange.getAction().equalsIgnoreCase("UPDATE")){
+            logger.info("Updated a UserProfile Object with id "+userProfile.getId()+" with address "+userProfile.getAddress()+" with Phonenumber "+userProfile.getPhoneNumber());        
     		userProfileRepository.save(userProfile);
     	}
     	if(userProfileChange.getAction().equalsIgnoreCase("DELETE")){
+    		
     		userProfileRepository.deleteById(userProfile.getId());
     	}
 	

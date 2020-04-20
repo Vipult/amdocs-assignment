@@ -10,13 +10,7 @@ public interface UserProfileService {
 	
 	public UserProfile getUserProfile(Long id) throws ResourceNotFoundException;
 	  
-	 public UserProfile saveUserProfile(UserProfile userProfile);
-	  
-	 public void deleteUserProfile(Long id);
-	  
-	 //public void updateUserProfile(UserProfile userProfile);
-
-	 public UserProfile updateUserProfile(UserProfile userProfile);
-	 
+	 public UserProfile saveUserProfile(UserProfile userProfile);	  
+		 
 	 public List<UserProfile> findAllUserProfiles();
 }

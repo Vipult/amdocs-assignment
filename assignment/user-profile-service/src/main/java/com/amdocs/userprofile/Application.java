@@ -18,11 +18,6 @@ public class Application {
 	
 	 private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	
-/*  @StreamListener(Sink.INPUT)
-  public void loggerSink(UserProfileChangeModel userProfileChange) {
-        logger.info("Received an event for User Profile Change id {} and action {} and address {} and phonenumber {}", userProfileChange.getId(),userProfileChange.getAction(),userProfileChange.getAddress(),userProfileChange.getPhoneNumber());
-    }
-*/	
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }

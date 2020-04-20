@@ -105,73 +105,7 @@ public class UserProfileRestControllerTest {
     	verify(userProfileService, times(1)).saveUserProfile(any(UserProfile.class));
     	
     }
-    @Test
-    public void verifyUpdateUserForCorrectId() throws Exception {
-    	
-    	UserProfile newUserProfile = new UserProfile(1L, "Bibwewadi,Pune", "9987736354");
-    	
-       // when(userProfileMockRepository.save(any(UserProfile.class))).thenReturn(newUserProfile);
-        when(userProfileService.getUserProfile(1L)).thenReturn(newUserProfile);
-        when(userProfileService.updateUserProfile(any(UserProfile.class))).thenReturn(newUserProfile);
-        
-    	
-    	mockMvc.perform(put("/userprofilemgmt/userprofiles/1")
-                .content(om.writeValueAsString(newUserProfile))
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-                /*.andDo(print())*/
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.address", is("Bibwewadi,Pune")))
-                .andExpect(jsonPath("$.phoneNumber", is("9987736354")));
-    	        
-    	verify(userProfileService, times(1)).getUserProfile(1L);
-    	verify(userProfileService, times(1)).updateUserProfile(any(UserProfile.class));
-    	
-    }
-    @Test
-    public void verifyUpdateUserForWrongId() throws Exception {
-    	
-    	UserProfile newUserProfile = new UserProfile(1L, "Bibwewadi,Pune", "9987736354");
-    	
-       // when(userProfileMockRepository.save(any(UserProfile.class))).thenReturn(newUserProfile);
-        
-        when(userProfileService.getUserProfile(2L)).thenThrow(ResourceNotFoundException.class);
-        
-    	
-    	mockMvc.perform(put("/userprofilemgmt/userprofiles/2")
-                .content(om.writeValueAsString(newUserProfile))
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-                /*.andDo(print())*/
-                .andExpect(status().isNotFound());
-               
-    	        
-    	verify(userProfileService, times(1)).getUserProfile(2L);
-    	
-    }
     
-    @Test
-    public void verifyDeleteUser() throws Exception {
-    	
-    	UserProfile newUserProfile = new UserProfile(1L, "Bibwewadi,Pune", "9987736354");
-    	
-       // when(userProfileMockRepository.save(any(UserProfile.class))).thenReturn(newUserProfile);
-        
-    	when(userProfileService.getUserProfile(1L)).thenReturn(newUserProfile);    	
-        Mockito.doNothing().when(userProfileService).deleteUserProfile(1L);
-        
-        
-    	
-    	mockMvc.perform(MockMvcRequestBuilders.delete("/userprofilemgmt/userprofiles/1")
-               // .content(om.writeValueAsString(newUserProfile))
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-                /*.andDo(print())*/
-                .andExpect(status().isNoContent());
-               
-    	        
-    	verify(userProfileService, times(1)).getUserProfile(1L);
-    	verify(userProfileService, times(1)).deleteUserProfile(1L);
-    	
-    }
     
     public static String asJsonString(final Object obj) {
         try {

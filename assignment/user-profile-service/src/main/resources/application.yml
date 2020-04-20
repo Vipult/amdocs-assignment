@@ -7,20 +7,14 @@ spring:
           destination: userProfileChangeTopic
           content-type: application/json
           group: UserProfileGroup
-#            consumer:
-#              headerMode:none
       kafka:
         binder:
           zkNodes: kafkaserver
           brokers: kafkaserver
-#          defaultBrokerPort:9092
-#          zkNodes: kafkaserver
-#          brokers: kafkaserver
 
 
 
   datasource:
-#    url: jdbc:h2:mem:testdb
     url: jdbc:h2:file:~/test
     platform: h2
     username: sa

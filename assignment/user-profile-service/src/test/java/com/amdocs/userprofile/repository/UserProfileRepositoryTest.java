@@ -37,31 +37,5 @@ public class UserProfileRepositoryTest {
 	 
 	 }
 	 
-	 @Test    
-	 public void verifyUpdateAtRepoLayer() 	 
-	 {        
-	 
-	 UserProfile userProfile = new UserProfile();        
-	 userProfile.setAddress("Viman Nagar,Pune");
-	 userProfile.setPhoneNumber("9080796050");
-	 userProfile = entityManager.persistAndFlush(userProfile);        
-	 
-	 assertEquals("Viman Nagar,Pune", userProfileRespository.findById(userProfile.getId()).get().getAddress());
- 	assertEquals("9080796050",userProfileRespository.findById(userProfile.getId()).get().getPhoneNumber());
-	 
-	 }
-	 
-	 @Test    
-	 public void verifyDeleteAtRepoLayer() 	 
-	 {        
-	 
-	 UserProfile userProfile = new UserProfile();        
-	 userProfile.setAddress("Viman Nagar,Pune");
-	 userProfile.setPhoneNumber("9080796050");
-	 entityManager.remove(userProfile);        
-	 
-	 
-	 
-	 }
-
+	
 }
