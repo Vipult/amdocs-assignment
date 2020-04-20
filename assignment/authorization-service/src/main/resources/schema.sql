@@ -1,9 +1,9 @@
---DROP TABLE IF EXISTS USER;
+DROP TABLE IF EXISTS USER;
 
---CREATE TABLE USER(
-  --USERNAME varchar(50) NOT NULL,
-  --PASSWORD varchar(65) NOT NULL,
-  --ROLE varchar(15) NOT NULL);
+CREATE TABLE USER(
+  USERNAME varchar(50) NOT NULL,
+  PASSWORD varchar(65) NOT NULL,
+  ROLE varchar(15) NOT NULL);
 
 --DROP TABLE IF EXISTS employee;
 --DROP TABLE IF EXISTS users;
@@ -22,11 +22,11 @@
 --    foreign key (username) references users (username)
 --);
 
-DROP TABLE IF EXISTS EMPLOYEE;
+--DROP TABLE IF EXISTS EMPLOYEE;
 
 
-CREATE TABLE EMPLOYEE(
-USERNAME varchar(50) NOT NULL,
-PASSWORD varchar(65) NOT NULL,
-ROLE varchar(15) NOT NULL);
+--CREATE TABLE EMPLOYEE(
+--USERNAME varchar(50) NOT NULL,
+--PASSWORD varchar(65) NOT NULL,
+--ROLE varchar(15) NOT NULL);
 

@@ -25,7 +25,6 @@ import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
-import lombok.Builder;
 
 import com.amdocs.authorization.service.AuthorizationService;
 import com.amdocs.authorization.model.UserProfile;;
@@ -39,10 +38,19 @@ public class AuthorizationRestController {
 	@Autowired
 	 private AuthorizationService authorizationService;
 	
+	/*@GetMapping("/userprofiles")
+	 public String getUserProfile(){	
+		
+		logger.info("Saving new User Profile in controller");
+		 return "Authentication successful!!!";
+		//authorizationService.saveUserProfile(userProfile);  
+	 }*/
+	
 	@PostMapping("/userprofiles")
 	 public void saveUserProfile(@RequestBody UserProfile userProfile){	
 		
 		logger.info("Saving new User Profile in controller");
+		//return "Authentication POST Request successful!!!";
 		authorizationService.saveUserProfile(userProfile);  
 	 }
 		

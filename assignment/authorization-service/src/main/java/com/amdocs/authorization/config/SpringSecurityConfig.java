@@ -31,38 +31,30 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @ConfigurationProperties("spring.datasource")
-    public DataSource dataSource() {
+    public DataSource ds() {
         return DataSourceBuilder.create().build();
     }
-    
-  
-    
-  /*   @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName("org.h2.Driver");
-        driverManagerDataSource.setUrl("jdbc:h2:file:~/test");
-        driverManagerDataSource.setUsername("sa");
-        driverManagerDataSource.setPassword("");
-        return driverManagerDataSource;
-    }*/
     
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.httpBasic()
+       http.httpBasic()
             .and()
             .authorizeRequests()
-            .antMatchers("/console/**").permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().authenticated().and()
+            .csrf().disable();
+    	
+    
+       
+    	
     }
     
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
     {
         auth.jdbcAuthentication().dataSource(dataSource)
-           .authoritiesByUsernameQuery("select USERNAME, ROLE from EMPLOYEE where USERNAME=?")
-            .usersByUsernameQuery("select USERNAME, PASSWORD  from EMPLOYEE where USERNAME=?");
+            .authoritiesByUsernameQuery("select USERNAME, ROLE from EMPLOYEE where USERNAME=?")
+            .usersByUsernameQuery("select USERNAME, PASSWORD, 1 as enabled  from EMPLOYEE where USERNAME=?");
     }
     
     @Bean
@@ -70,81 +62,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 	
-
 	
-	/*@Autowired
-    DataSource datasource;
-	
-	@Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName("org.h2.Driver");
-        driverManagerDataSource.setUrl("jdbc:h2:file:~/test");
-        driverManagerDataSource.setUsername("sa");
-        driverManagerDataSource.setPassword("");
-        return driverManagerDataSource;
-    }
-	
-	
-	@Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		logger.info("starting authentication");
-		//username=? and 
-		//username=? and
-		auth.jdbcAuthentication().dataSource(datasource)
-		.usersByUsernameQuery(
-		           "select username,password from users where username=?")
-		          .authoritiesByUsernameQuery(
-		           "select username,role from authorities where username=?");
-		;
-		
-		logger.info("DB Values is ::"+auth.jdbcAuthentication().dataSource(datasource)
-		          .usersByUsernameQuery(
-		        		  "select username,password from users where statusenable=true")
-		                 .authoritiesByUsernameQuery(
-		                		 "select username,role from authorities "));
-    }
-	
-	 @Override
-     protected void configure(HttpSecurity http) throws Exception {
-		 logger.info("starting authorization");
-        // http.authorizeRequests()
-         //.antMatchers("/console/**").hasRole("ADMIN")
-        // .antMatchers("/authorization/**").permitAll().anyRequest().authenticated();
-         //.hasRole("ADMIN")
-             //.anyRequest().authenticated();
-             //.and().httpBasic();
-           //  .and()
-           //  .formLogin();
-		 http.authorizeRequests()	        
-	        .antMatchers(HttpMethod.POST,"/authorization/userprofiles").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')").anyRequest().authenticated()
-	        .antMatchers(HttpMethod.PUT, "/authorization/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	        .antMatchers(HttpMethod.DELETE,"/authorization/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	        .anyRequest().authenticated()
-	        .and()
-            .csrf().disable()
-            .formLogin().disable()
-            ;
-		 http.httpBasic()
-         .and()
-         .authorizeRequests()
-         .anyRequest().authenticated();
-     }
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**");
 	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/welcome").hasAnyRole("USER", "ADMIN")
-				.antMatchers("/getEmployees").hasAnyRole("USER", "ADMIN").antMatchers("/addNewEmployee")
-				.hasAnyRole("ADMIN").anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
-				.and().logout().permitAll();
-
-		http.csrf().disable();
-	}
-
- */
-}

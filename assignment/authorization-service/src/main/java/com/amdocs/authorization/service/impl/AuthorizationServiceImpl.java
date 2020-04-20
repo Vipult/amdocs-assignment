@@ -10,9 +10,6 @@ import com.amdocs.authorization.repository.AuthorizationRestConnector;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.amdocs.authorization.service.AuthorizationService;
-//import com.boxchain.restproxy.repository.RestProxyConnector;
-//import com.boxchain.restproxy.service.RestProxyService;
-//import com.boxchain.restproxy.model.Statistic;
 
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService{
@@ -35,7 +32,7 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 	 @Override 
 	  public void updateUserProfile(UserProfile userProfile) {
 		 logger.info("Sending an UPDATE event");
-		 simpleSourceBean.publishUserProfileChange("UPDATE",userProfile.getId(),userProfile.getAddress(),userProfile.getPhoneNumber());
+		simpleSourceBean.publishUserProfileChange("UPDATE",userProfile.getId(),userProfile.getAddress(),userProfile.getPhoneNumber());
 
 	 }
 
