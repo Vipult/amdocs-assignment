@@ -1,46 +1,38 @@
 package com.amdocs.userprofile.controller;
 
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.amdocs.userprofile.Application;
-import com.amdocs.userprofile.controller.UserProfileRestController;
 import com.amdocs.userprofile.model.UserProfile;
 import com.amdocs.userprofile.repository.UserProfileRepository;
 import com.amdocs.userprofile.service.UserProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import org.springframework.http.HttpHeaders;
-import static org.hamcrest.Matchers.is;
-
-import java.util.Optional;
-
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
+import com.amdocs.userprofile.exception.ResourceNotFoundException;;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -93,23 +85,91 @@ public class UserProfileRestControllerTest {
     }
     
     @Test
-    public void it_should_return_created_user() throws Exception {
+    public void verifyCreateUser() throws Exception {
     	
     	UserProfile newUserProfile = new UserProfile(1L, "Viman Nagar,Pune", "9987736354");
     	
-        when(userProfileMockRepository.save(any(UserProfile.class))).thenReturn(newUserProfile);
+       // when(userProfileMockRepository.save(any(UserProfile.class))).thenReturn(newUserProfile);
+        when(userProfileService.saveUserProfile(any(UserProfile.class))).thenReturn(newUserProfile);
         
     	
-    	mockMvc.perform(post("/userprofiles")
+    	mockMvc.perform(post("/userprofilemgmt/userprofiles")
                 .content(om.writeValueAsString(newUserProfile))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
                 /*.andDo(print())*/
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.address", is("Viman Nagar,Pune")))
                 .andExpect(jsonPath("$.phoneNumber", is("9987736354")));
     	        
-    	verify(userProfileMockRepository, times(1)).save(any(UserProfile.class));
+    	verify(userProfileService, times(1)).saveUserProfile(any(UserProfile.class));
+    	
+    }
+    @Test
+    public void verifyUpdateUserForCorrectId() throws Exception {
+    	
+    	UserProfile newUserProfile = new UserProfile(1L, "Bibwewadi,Pune", "9987736354");
+    	
+       // when(userProfileMockRepository.save(any(UserProfile.class))).thenReturn(newUserProfile);
+        when(userProfileService.getUserProfile(1L)).thenReturn(newUserProfile);
+        when(userProfileService.updateUserProfile(any(UserProfile.class))).thenReturn(newUserProfile);
+        
+    	
+    	mockMvc.perform(put("/userprofilemgmt/userprofiles/1")
+                .content(om.writeValueAsString(newUserProfile))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                /*.andDo(print())*/
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.address", is("Bibwewadi,Pune")))
+                .andExpect(jsonPath("$.phoneNumber", is("9987736354")));
+    	        
+    	verify(userProfileService, times(1)).getUserProfile(1L);
+    	verify(userProfileService, times(1)).updateUserProfile(any(UserProfile.class));
+    	
+    }
+    @Test
+    public void verifyUpdateUserForWrongId() throws Exception {
+    	
+    	UserProfile newUserProfile = new UserProfile(1L, "Bibwewadi,Pune", "9987736354");
+    	
+       // when(userProfileMockRepository.save(any(UserProfile.class))).thenReturn(newUserProfile);
+        
+        when(userProfileService.getUserProfile(2L)).thenThrow(ResourceNotFoundException.class);
+        
+    	
+    	mockMvc.perform(put("/userprofilemgmt/userprofiles/2")
+                .content(om.writeValueAsString(newUserProfile))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                /*.andDo(print())*/
+                .andExpect(status().isNotFound());
+               
+    	        
+    	verify(userProfileService, times(1)).getUserProfile(2L);
+    	
+    }
+    
+    @Test
+    public void verifyDeleteUser() throws Exception {
+    	
+    	UserProfile newUserProfile = new UserProfile(1L, "Bibwewadi,Pune", "9987736354");
+    	
+       // when(userProfileMockRepository.save(any(UserProfile.class))).thenReturn(newUserProfile);
+        
+    	when(userProfileService.getUserProfile(1L)).thenReturn(newUserProfile);    	
+        Mockito.doNothing().when(userProfileService).deleteUserProfile(1L);
+        
+        
+    	
+    	mockMvc.perform(MockMvcRequestBuilders.delete("/userprofilemgmt/userprofiles/1")
+               // .content(om.writeValueAsString(newUserProfile))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                /*.andDo(print())*/
+                .andExpect(status().isNoContent());
+               
+    	        
+    	verify(userProfileService, times(1)).getUserProfile(1L);
+    	verify(userProfileService, times(1)).deleteUserProfile(1L);
     	
     }
     
