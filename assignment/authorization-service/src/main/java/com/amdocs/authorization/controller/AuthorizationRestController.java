@@ -63,7 +63,7 @@ public class AuthorizationRestController {
 	@DeleteMapping("/userprofiles/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public Map < String, Boolean > deleteUserProfile (@PathVariable(name="id")Long id) throws ResourceNotFoundException{
-		logger.info("Deleting User in Authorization Controller");
+		logger.info("Deleting User");
 		UserProfile userProfile = authorizationService.getUserProfileById(id);
 		if(userProfile==null){
 			throw new ResourceNotFoundException("User Profile with id '" + id + "' does no exist");
