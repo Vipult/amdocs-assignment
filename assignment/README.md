@@ -1,6 +1,17 @@
 Pre-requisites:
 Docker desktop 2.0.1.4 should be installed to run this project.
 
+Use case and Functional flow:
+PUT or Update User Profile Scenario:
+1.Executing Update User Profile operation as described in step No.5 below will trigger an event and
+publish it to userProfileChangeTopic Kafka Topic.Authorization Service will act as a source for
+this UPDATE event.
+2.User Profile Service will act as a consumer for this event and will consume the UPDATE event
+received from userProfileChangeTopic Kafka Topic and Update either the address and phonenumber or
+both in User_Profile table in H2 DB.
+
+
+
 Steps:
 1.Git Clone the project from the repository using:
 
@@ -56,6 +67,7 @@ Request Body:
 Expected result:
 POSTMAN status: 200 OK
 A record should be updated in Database with id: 1, address: Viman Nagar,Pune,phoneNumber: 9876789609
+NOTE: URL @Pathvariable value i.e. in this case should match request Body id variable i.e. in this case 1 value.
 
 3.For DELETE:
 Authorization->Basic Auth-> Username: admin Password: password or Username: user Password: password
@@ -72,6 +84,8 @@ NOTE: A REST endpoint http://localhost:8080/userprofilemgmt/userprofiles can be 
 i.e.
 Hit the URL: http://localhost:8080/authorization/userprofiles/1
 Action : GET
+
+For All the REST EndPoints,Amdocs assignment collection.postman_collection.json has been created.Please import the same in POSTMAN.
 
 
 

@@ -1,10 +1,10 @@
 package com.amdocs.userprofile.events.models;
 
 public class UserProfileChangeModel{
-    private Long id;
-    private String action;
-    private String address;
-    private String phoneNumber;
+	private Long id;
+	private String action;
+	private String address;
+	private String phoneNumber;
 	public UserProfileChangeModel(Long id, String action, String address, String phoneNumber) {
 		super();
 		this.id = id;
@@ -12,7 +12,7 @@ public class UserProfileChangeModel{
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -37,11 +37,11 @@ public class UserProfileChangeModel{
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-   
-   
 
-    
-  
+
+
+
+
 
 
 }

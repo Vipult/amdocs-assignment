@@ -1,42 +1,44 @@
 package com.amdocs.userprofile.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER_PROFILE")
-public class UserProfile {
-	
+public class UserProfile  {
+
 	
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	
-	
-	
+
+
+
+
 	@Column(name = "ADDRESS")
 	private String address;	
-	
+
 	@Column(name = "PHONENUMBER")
 	private String phoneNumber;
-	
+
 	public UserProfile(){
 		super();
 	}
-	
+
 	public UserProfile(Long id, String address, String phoneNumber) {
 		super();
 		this.id = id;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -61,8 +63,8 @@ public class UserProfile {
 		this.phoneNumber = phoneNumber;
 	}
 
-	
-	
-	
+
+
+
 
 }
