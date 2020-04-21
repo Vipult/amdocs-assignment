@@ -8,7 +8,7 @@ public interface AuthorizationRestConnector {
 
 	public ResponseEntity<UserProfile> saveUserProfile(UserProfile userProfile);
 	
-	
+	public UserProfile getUserProfileById(Long id);
 
 
 }

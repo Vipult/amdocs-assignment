@@ -74,7 +74,13 @@ public class AuthorizationServiceImpl implements AuthorizationService{
  
 	}
 	
-	
+	public UserProfile getUserProfileById(Long id) throws ResourceNotFoundException {
+		UserProfile userProfile = authorizationRestConnector.getUserProfileById(id); 
+		if(userProfile==null){
+			throw new ResourceNotFoundException("User Profile with id '" + id + "' does no exist");
+		}
+		return userProfile;
+	}
 
 
 

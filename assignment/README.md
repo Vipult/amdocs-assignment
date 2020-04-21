@@ -17,6 +17,8 @@ Steps:
 
 git clone https://github.com/Vipult/amdocs-assignment.git
 
+this will create local directory amdocs-assigment\assignment
+
 2.Go to the root folder of the project or cd to root folder of the project i.e.assignment. 
 
 3.To build the project use this command:
@@ -50,6 +52,24 @@ Request Body:
 Expected result:
 POSTMAN status: 200 OK
 A record should be created in Database with id: 1, address: Bibwewadi,Pune,phoneNumber: 9987767564
+expected JSON response:
+{
+    "id": 1,
+    "address": "Bibwewadi,Pune",
+    "phoneNumber": "9987736354"
+}
+
+Error JSON response:
+for phonenumber value not numeric or less than or greater than 10 digits
+{
+    "errorMessage": [
+        "phoneNumber : PhoneNumber should be 10 digit",
+        "phoneNumber : PhoneNumber should be numeric"
+    ],
+    "statusCode": 400
+}
+
+
 
 2.For PUT:
 To update the same record:
@@ -68,6 +88,23 @@ Expected result:
 POSTMAN status: 200 OK
 A record should be updated in Database with id: 1, address: Viman Nagar,Pune,phoneNumber: 9876789609
 NOTE: URL @Pathvariable value i.e. in this case should match request Body id variable i.e. in this case 1 value.
+Expected JSON response:
+{
+    "id":"1"
+    "address": "Viman Nagar,Pune",
+    "phoneNumber": "9876789609"
+}
+
+Error JSON response:
+for phonenumber value not numeric or less than or greater than 10 digits
+{
+    "errorMessage": [
+        "phoneNumber : PhoneNumber should be 10 digit",
+        "phoneNumber : PhoneNumber should be numeric"
+    ],
+    "statusCode": 400
+}
+
 
 3.For DELETE:
 Authorization->Basic Auth-> Username: admin Password: password or Username: user Password: password
@@ -80,12 +117,22 @@ Expected result:
 POSTMAN status: 204 NO CONTENT
 A record should be deleted in Database.
 
+Error JSON response:
+If you delete same user with same id i.e. id=1 again then
+{
+    "timestamp": "2020-04-21T06:01:09.608+0000",
+    "message": "User Profile with id '1' does no exist",
+    "details": "uri=/authorization/userprofiles/1"
+}
+This is applicable for any user not existing in the DB.
+ 
+
 NOTE: A REST endpoint http://localhost:8080/userprofilemgmt/userprofiles can be used to check the output after execution of each scenario above.
 i.e.
 Hit the URL: http://localhost:8080/authorization/userprofiles/1
 Action : GET
 
-For All the REST EndPoints,Amdocs assignment collection.postman_collection.json has been created.Please import the same in POSTMAN.
+For All the REST EndPoints for Amdocs assignment,  "Amdocs assignment collection.postman_collection.json" has been created in assignment root folder.Please import the same in POSTMAN.
 
 
 

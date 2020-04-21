@@ -1,6 +1,7 @@
 package com.amdocs.userprofile.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 
 	public List<UserProfile> findAllUserProfiles(){
 		return userProfileRepository.findAll();
+	}
+	
+	public Optional<UserProfile> findUserProfileById(Long id){
+		return userProfileRepository.findById(id);
 	}
 
 	public UserProfile saveUserProfile(UserProfile profile){

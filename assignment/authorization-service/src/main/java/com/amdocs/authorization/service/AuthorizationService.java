@@ -12,7 +12,7 @@ public interface AuthorizationService {
 
 	public ResponseEntity<UserProfile> saveUserProfile(UserProfile userProfile);
 	public UserProfile updateUserProfile(UserProfile userprofile);
-	
+	public UserProfile getUserProfileById(Long id)throws ResourceNotFoundException;
 
 
 }

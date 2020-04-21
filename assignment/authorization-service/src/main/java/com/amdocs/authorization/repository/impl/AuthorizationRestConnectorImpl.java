@@ -3,6 +3,8 @@ package com.amdocs.authorization.repository.impl;
 
 import java.net.URI;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +44,17 @@ public class AuthorizationRestConnectorImpl implements AuthorizationRestConnecto
 		return result;
 	}
 	
-	
+	@Override
+	public UserProfile getUserProfileById(Long id){
+		
+		final String uri = "http://userprofileservice:8080/userprofilemgmt/userprofiles/{id}";
+		
+		Map<String, Long> params = new HashMap<String, Long>();
+	    params.put("id",id);
+		
+		UserProfile user = restTemplate.getForObject(uri, UserProfile.class,params);
+		return user;
+	}
 
 
 }
