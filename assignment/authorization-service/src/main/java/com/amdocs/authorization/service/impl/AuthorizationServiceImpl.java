@@ -17,6 +17,7 @@ import com.amdocs.authorization.model.UserProfile;
 import com.amdocs.authorization.repository.AuthorizationRestConnector;
 import com.amdocs.authorization.service.AuthorizationService;
 import com.amdocs.authorization.exception.ResourceNotFoundException;
+import com.amdocs.authorization.exception.BadRequestException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -42,7 +43,8 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 	}
 
 	@Override 
-	public UserProfile updateUserProfile(UserProfile userProfile) {
+	public UserProfile updateUserProfile(UserProfile userProfile,Long id)throws BadRequestException {
+		validateEntityId(userProfile,id);
 		validateEntity(userProfile);
 		logger.info("Sending an UPDATE event");
 		kafkaSourceBean.publishUserProfileChange("UPDATE",userProfile.getId(),userProfile.getAddress(),userProfile.getPhoneNumber());
@@ -72,6 +74,13 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 		throw new ConstraintViolationException(constraintViolations);
 		}
  
+	}
+	
+	private void validateEntityId(UserProfile userProfile,Long id) throws BadRequestException {
+		if(userProfile.getId()!=id){
+			throw new BadRequestException("@PathVariable id and @RequestBody id does not match");
+		}
+		
 	}
 	
 	public UserProfile getUserProfileById(Long id) throws ResourceNotFoundException {

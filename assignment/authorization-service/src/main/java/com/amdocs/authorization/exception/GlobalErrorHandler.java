@@ -35,4 +35,10 @@ public class GlobalErrorHandler {
 	         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
 	         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
 	    }
+		
+		@ExceptionHandler(BadRequestException.class)
+	    public ResponseEntity<?> badRequestException(BadRequestException ex, WebRequest request) {
+	         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+	         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+	    }
 	}

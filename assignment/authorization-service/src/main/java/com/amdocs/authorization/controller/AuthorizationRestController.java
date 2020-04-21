@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amdocs.authorization.exception.ResourceNotFoundException;
+import com.amdocs.authorization.exception.BadRequestException;
 import com.amdocs.authorization.model.UserProfile;
 import com.amdocs.authorization.service.AuthorizationService;;
 
@@ -50,9 +51,9 @@ public class AuthorizationRestController {
 	 * @param id
 	 */
 	@PutMapping("/userprofiles/{id}")
-	public UserProfile updateStatistic(@RequestBody UserProfile newProfile,@PathVariable(name="id")Long id){
+	public UserProfile updateStatistic(@RequestBody UserProfile newProfile,@PathVariable(name="id")Long id)throws BadRequestException{
 		logger.info("Updating User Profile in Authorization Controller");
-		return authorizationService.updateUserProfile(newProfile);
+		return authorizationService.updateUserProfile(newProfile,id);
 	}
 
 
