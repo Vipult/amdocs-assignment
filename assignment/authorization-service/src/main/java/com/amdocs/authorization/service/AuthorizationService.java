@@ -13,7 +13,6 @@ public interface AuthorizationService {
 	public void deleteUserProfile(Long id) ;
 
 	public ResponseEntity<UserProfile> saveUserProfile(UserProfile userProfile);
-	public UserProfile updateUserProfile(UserProfile userprofile);
 	public UserProfile getUserProfileById(Long id)throws ResourceNotFoundException;
 	public UserProfile updateUserProfile(UserProfile userprofile,Long id)throws BadRequestException;
 
